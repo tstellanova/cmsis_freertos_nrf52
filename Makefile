@@ -116,9 +116,6 @@ C_INCLUDES =  \
 -IFreeRTOS/portable/GCC/nrf52 \
 -ICMSIS/Include
 
-# -Inordic/nrfx
-# -Inordic \
-
 
 
 # compile gcc flags
