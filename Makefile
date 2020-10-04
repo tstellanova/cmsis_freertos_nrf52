@@ -13,7 +13,7 @@
 ######################################
 # target
 ######################################
-TARGET = cmsis_freertos_nrf5
+TARGET = cmsis_freertos_nrf52
 
 LIB_OUTFILE  = libcmsis_rtos2.a
 
@@ -46,11 +46,10 @@ FreeRTOS/Source/queue.c \
 FreeRTOS/Source/stream_buffer.c \
 FreeRTOS/Source/tasks.c \
 FreeRTOS/Source/timers.c \
-FreeRTOS/portable/CMSIS/nrf52/port_cmsis.c \
-FreeRTOS/Source/portable/MemMang/heap_3.c \
 FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c \
+FreeRTOS/Source/portable/MemMang/heap_4.c \
+FreeRTOS/portable/CMSIS/nrf52/port_cmsis.c \
 FreeRTOS/portable/GCC/nrf52/port.c
-
 
 
 
@@ -98,25 +97,29 @@ MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
 AS_DEFS = 
 
 # C defines
-C_DEFS = -DNRF52832_XXAA
+C_DEFS = \
+-DNRF52832_XXAA
+
 # NRF52832_XXAA
 # NRF52840_XXAA
 
 # AS includes
-AS_INCLUDES =  \
--IFreeRTOS/config 
+AS_INCLUDES = 
 
 
 # C includes
 C_INCLUDES =  \
 -IFreeRTOS/Source/include \
+-IFreeRTOS/Source/CMSIS_RTOS_V2 \
 -IFreeRTOS/config \
--Inordic/nrfx/mdk \
 -IFreeRTOS/portable/CMSIS/nrf52 \
 -IFreeRTOS/portable/GCC/nrf52 \
+-Inordic/softdevice/s140_nrf52_6.1.1_API/include \
+-Inordic/nrfx/mdk \
 -ICMSIS/Include
 
-
+# -Inordic/softdevice/s132_nrf52_6.1.1_API/include \
+# -Inordic/softdevice/s140_nrf52_6.1.1_API/include \
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
@@ -138,7 +141,7 @@ LIBDIR =
 
 
 # default action: build all
-slib: check-env $(BUILD_DIR)/$(LIB_OUTFILE)
+slib: $(BUILD_DIR)/$(LIB_OUTFILE)
 all:  slib
 
 #######################################
@@ -171,14 +174,7 @@ clean:
 	-rm -fR $(BUILD_DIR)
   
 #######################################
-# ensure BUILD_DIR is defined
-#######################################
-check-env:
-ifndef BUILD_DIR
-	$(error BUILD_DIR is undefined)
-endif
 
-#######################################
 # dependencies
 #######################################
 -include $(wildcard $(BUILD_DIR)/*.d)
