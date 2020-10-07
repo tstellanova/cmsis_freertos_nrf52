@@ -37,19 +37,25 @@ LIB_OUTFILE  = libcmsis_rtos2.a
 # source
 ######################################
 
-# FreeRTOS-specific sources
+# freertosk-specific sources
 RTOS_SOURCES = \
-FreeRTOS/Source/croutine.c \
-FreeRTOS/Source/event_groups.c \
-FreeRTOS/Source/list.c \
-FreeRTOS/Source/queue.c \
-FreeRTOS/Source/stream_buffer.c \
-FreeRTOS/Source/tasks.c \
-FreeRTOS/Source/timers.c \
-FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c \
-FreeRTOS/Source/portable/MemMang/heap_4.c \
-FreeRTOS/portable/CMSIS/nrf52/port_cmsis.c \
-FreeRTOS/portable/GCC/nrf52/port.c
+freertosk/croutine.c \
+freertosk/event_groups.c \
+freertosk/list.c \
+freertosk/queue.c \
+freertosk/stream_buffer.c \
+freertosk/tasks.c \
+freertosk/timers.c \
+freertosk/portable/MemMang/heap_4.c \
+freertosk/portable/GCC/ARM_CM4F/port.c \
+CMSIS/nrf52/port_cmsis.c \
+CMSIS_RTOS_V2/cmsis_os2.c \
+CMSIS/nrf52/port.c
+
+
+
+#freertosk/portable/CMSIS/nrf52/port_cmsis.c \
+#freertosk/portable/GCC/nrf52/port.c
 
 
 
@@ -109,11 +115,11 @@ AS_INCLUDES =
 
 # C includes
 C_INCLUDES =  \
--IFreeRTOS/Source/include \
--IFreeRTOS/Source/CMSIS_RTOS_V2 \
--IFreeRTOS/config \
--IFreeRTOS/portable/CMSIS/nrf52 \
--IFreeRTOS/portable/GCC/nrf52 \
+-Ifreertosk/include \
+-ICMSIS_RTOS_V2 \
+-Iconfig \
+-Ifreertosk/portable/GCC/ARM_CM4F \
+-Ifreertosk/portable/CMSIS/nrf52 \
 -Inordic/softdevice/s140_nrf52_6.1.1_API/include \
 -Inordic/nrfx/mdk \
 -ICMSIS/Include
